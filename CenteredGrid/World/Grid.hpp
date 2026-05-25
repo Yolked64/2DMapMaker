@@ -1,0 +1,33 @@
+#pragma once
+
+#include <fstream>
+
+#include "../Data.hpp"
+#include "Tile.hpp"
+#include "../json.hpp"
+
+using json = nlohmann::json;
+
+class Grid
+{
+	public:
+		Grid(int WorldSize, int TileSize);
+
+		void Draw(const Texture& Atlas);
+		void AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight);
+		void RemoveTile(size_t SparseIndex, int AtlasHeight);
+		void ToggleLineDisplay();
+
+		void Save();
+		int OpenTileMap(const std::string& FileName, int AtlasHeight);
+	private:
+		int Size;
+		int TileSize;
+		int AmountOfTiles;
+		bool DisplayLines = false;
+
+		std::vector<size_t> Sparse;
+		std::vector<Tile> Tiles;
+
+		void DrawLines();
+};

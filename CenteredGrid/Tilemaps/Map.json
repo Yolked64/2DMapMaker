@@ -1,0 +1,65 @@
+{
+    "Tile195312" :
+    {
+        "PosX" : 0,
+        "PosY" : 0,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile195313" :
+    {
+        "PosX" : 16,
+        "PosY" : 0,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile194688" :
+    {
+        "PosX" : 16,
+        "PosY" : -16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile194687" :
+    {
+        "PosX" : 0,
+        "PosY" : -16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile194686" :
+    {
+        "PosX" : -16,
+        "PosY" : -16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile195311" :
+    {
+        "PosX" : -16,
+        "PosY" : 0,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile195936" :
+    {
+        "PosX" : -16,
+        "PosY" : 16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile195937" :
+    {
+        "PosX" : 0,
+        "PosY" : 16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    },
+    "Tile195938" :
+    {
+        "PosX" : 16,
+        "PosY" : 16,
+        "AtlasX" : 0,
+        "AtlasY" : 0
+    }
+}

@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CenteredGrid/CenteredGrid.vcxproj" Id="538a94b9-765e-45e1-9a5a-b5cca507c7ec" />
+</Solution>
