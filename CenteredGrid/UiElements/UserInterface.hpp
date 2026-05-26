@@ -30,7 +30,7 @@ class UserInterface
 		int MouseTextSize = 24;
 		Color MouseTextColor = ORANGE;
 
-		Vector2 AtlasTileUnderUse = Vector2(0, 0);
+		Vector2 AtlasPixelUnderUse = Vector2(0, 0);
 
 		std::unique_ptr<Grid> GridMap;
 		std::unique_ptr<WorldDisplayer> MyCamera;

@@ -1,20 +1,18 @@
 #include "Tile.hpp"
 
-Tile::Tile(Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight)
+Tile::Tile(Vector2 GridPosition, Vector2 AtlasPixelPosition, int AtlasHeight)
 {
 	this->GridPosition = GridPosition;
-	this->AtlasTilePosition = AtlasPosition;
-	this->WorldPosition = ToWorldSpace(GridPosition);
-	this->AtlasPixelPosition = ToPixelAtlasImageSpace(this->AtlasTilePosition, AtlasHeight);
+	this->WorldPosition = GridToWorld(GridPosition);
+	this->AtlasPixelPosition = AtlasPixelPosition;
 	Initialized = true;
 }
 
-void Tile::Set(Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight)
+void Tile::Set(Vector2 GridPosition, Vector2 AtlasPixelPosition, int AtlasHeight)
 {
 	this->GridPosition = GridPosition;
-	this->AtlasTilePosition = AtlasPosition;
-	this->AtlasPixelPosition = ToPixelAtlasImageSpace(this->AtlasTilePosition, AtlasHeight);
-	this->WorldPosition = ToWorldSpace(GridPosition);
+	this->AtlasPixelPosition = AtlasPixelPosition;
+	this->WorldPosition = GridToWorld(GridPosition);
 	Initialized = true;
 }
 
@@ -22,24 +20,23 @@ void Tile::Reset()
 {
 	GridPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
 	WorldPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
-	AtlasTilePosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
 	AtlasPixelPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
 	Initialized = false;
 }
 
 void Tile::CutPasteTo(Tile& Case, int AtlasHeight)
 {
-	Case.Set(GridPosition, AtlasTilePosition, AtlasHeight);
+	Case.Set(GridPosition, AtlasPixelPosition, AtlasHeight);
 	Reset();
 }
 
-bool Tile::IsSameAs(Vector2 TileGridPosition, Vector2 TileAtlasPosition)
+bool Tile::IsSameAs(Vector2 TileGridPosition, Vector2 PixelAtlasPosition)
 {
 	if (!Vector2Equals(GridPosition, TileGridPosition))
 	{
 		return false;
 	}
-	if (!Vector2Equals(AtlasTilePosition, TileAtlasPosition))
+	if (!Vector2Equals(AtlasPixelPosition, PixelAtlasPosition))
 	{
 		return false;
 	}
@@ -61,7 +58,7 @@ Vector2 Tile::GetGridPosition()
 	return GridPosition;
 }
 
-Vector2 Tile::GetAtlasTilePosition()
+Vector2 Tile::GetAtlasPixelPosition()
 {
-	return AtlasTilePosition;
+	return AtlasPixelPosition;
 }

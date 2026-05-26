@@ -65,7 +65,6 @@ void UserInterface::Draw()
 	const Texture& TextureUsed = TextureManager->GetTexture();
 	MyCamera->UseCamera();
 	GridMap->Draw(TextureUsed);
-	DrawCircle(0, 0, 2, RED);
 	MyCamera->QuitCamera();
 	DisplayUiElements();
 }
@@ -94,16 +93,18 @@ void UserInterface::HandleInputs()
 	Vector2 MouseWorldPosition = GetScreenToWorld2D(MousePosition, MyCamera->GetCamera());
 	float DeltaT = GetFrameTime();
 	bool LeftMouseButtonPressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+	int CurrentTextureHeight = TextureManager->GetTextureHeight();
 	if (InsideUi)
 	{
 		if (InsideAtlas && LeftMouseButtonPressed)
 		{
 			TextureManager->RegisterTilePressed(MousePosition);
-			AtlasTileUnderUse = TextureManager->GetAtlasTilePressed();
+			Vector2 AtlasTileUnderUse = TextureManager->GetAtlasTilePressed();
+			AtlasPixelUnderUse = TileAtlasToPixelImage(AtlasTileUnderUse, CurrentTextureHeight);
 		}
 		if (InsideSave && LeftMouseButtonPressed)
 		{
-			GridMap->Save();
+			GridMap->Save(CurrentTextureHeight);
 		}
 		if (InsideTextureOpener)
 		{
@@ -140,7 +141,7 @@ void UserInterface::HandleInputs()
 			else if (IsKeyPressed(KEY_ENTER))
 			{
 				const std::string& UserInput = TilemapLoader->GetInput();
-				int Success = GridMap->OpenTileMap(UserInput, TextureManager->GetTextureHeight());
+				int Success = GridMap->OpenTileMap(UserInput, CurrentTextureHeight);
 				if (Success == -1)
 				{
 					std::cout << "ERROR::TILEMAP LOADING:: FAILED LOADING " << UserInput << std::endl;
@@ -192,17 +193,17 @@ void UserInterface::HandleInputs()
 		}
 		if (LeftMouseButtonPressed || IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		{
-			Vector2 ClickedCase = ToGridSpace(MouseWorldPosition);
+			Vector2 ClickedCase = WorldToGrid(MouseWorldPosition);
 			if (ClickedCase.x >= 0 && ClickedCase.y >= 0 && ClickedCase.x <= GRID_WORLD_SIZE && ClickedCase.y <= GRID_WORLD_SIZE)
 			{
-				size_t SparseIndex = ToSparseIndex(ClickedCase);
-				GridMap->AddTile(SparseIndex, ClickedCase, AtlasTileUnderUse, CurrentTextureheight);
+				size_t SparseIndex = GridToIndex(ClickedCase);
+				GridMap->AddTile(SparseIndex, ClickedCase, AtlasPixelUnderUse, CurrentTextureheight);
 			}
 		}
 		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 		{
-			Vector2 ClickedCase = ToGridSpace(MouseWorldPosition);
-			size_t SparseIndex = ToSparseIndex(ClickedCase);
+			Vector2 ClickedCase = WorldToGrid(MouseWorldPosition);
+			size_t SparseIndex = GridToIndex(ClickedCase);
 			GridMap->RemoveTile(SparseIndex, CurrentTextureheight);
 		}
 	}

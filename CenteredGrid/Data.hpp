@@ -44,7 +44,7 @@ Convert a grid position to world position.
 GridPosition ranges from 0 to GRID_WORLD_SIZE.		(Tile units)
 WorldPosition ranges from -WORLD_SIZE to WORLD_SIZE (Pixel units)
 */
-inline Vector2 ToWorldSpace(Vector2 GridPosition)
+inline Vector2 GridToWorld(Vector2 GridPosition)
 {
 	int PixelGridPositionX = (int)GridPosition.x * TILE_SIZE;
 	int PixelGridPositionY = (int)GridPosition.y * TILE_SIZE;
@@ -61,7 +61,7 @@ Convert a World Position to a grid Position
 WorldPosition ranges from -WORLD_SIZE to WORLD_SIZE (Pixel units)
 GridPosition ranges from 0 to GRID_WORLD_SIZE.		(Tile units)
 */
-inline Vector2 ToGridSpace(Vector2 WorldPosition)
+inline Vector2 WorldToGrid(Vector2 WorldPosition)
 {
 	Vector2 PixelGridPosition = Vector2AddValue(WorldPosition, WORLD_SIZE);
 	Vector2 TileGridPosition = PixelGridPosition / TILE_SIZE;
@@ -73,7 +73,7 @@ Convert a Grid Position to an index in the sparse array of a grid.
 GridPosition ranges from 0 to GRID_WORLD_SIZE.		(Tile units)
 SparseIndex ranges from 0 to WORLD_SIZE * WORLD_SIZE * 4 / TILE_SIZE * TILE_SIZE (Index)
 */
-inline size_t ToSparseIndex(Vector2 GridPosition)
+inline size_t GridToIndex(Vector2 GridPosition)
 {
 	size_t SparseIndex = 0;
 	SparseIndex += (int)GridPosition.x;
@@ -86,7 +86,7 @@ Convert a Sparse Index to a position in the grid space.
 SparseIndex ranges from 0 to WORLD_SIZE * WORLD_SIZE * 4 / TILE_SIZE * TILE_SIZE (Index)
 GridPosition ranges from 0 to GRID_WORLD_SIZE.		(Tile units)
 */
-inline Vector2 ToGridPos(size_t SparseIndex)
+inline Vector2 IndexToGrid(size_t SparseIndex)
 {
 	Vector2 GridPosition = Vector2(0, 0);
 	GridPosition.x = (float)(SparseIndex % GRID_WORLD_SIZE);
@@ -100,7 +100,7 @@ Only use it if the position is in the atlas already.
 ScreenPosition ranges from 0 to SCREEN_WIDTH and 0 to SCREEN_HEIGHT (Pixel units)
 TileAtlasSpace ranges from 0 to ATLAS_SIZE / ATLAS_TILE_SIZE (Atlas Tile units)
 */
-inline Vector2 ToTileScreenAtlasSpace(Vector2 ScreenPosition, Vector2 AtlasOrigin, int AtlasHeight)
+inline Vector2 ScreenToTileAtlas(Vector2 ScreenPosition, Vector2 AtlasOrigin, int AtlasHeight)
 {
 	float PixelDeltaX = ScreenPosition.x - AtlasOrigin.x;
 	int TileDeltaX = (int)(PixelDeltaX);
@@ -122,7 +122,7 @@ TileAtlasSpace ranges from 0 to ATLAS_SIZE / ATLAS_TILE_SIZE (Atlas Tile units)
 Pixel in images space ranges from 0 to ATLAS_SIZE.
 Needed since the image space origin is at the top left corner and atlas space origin is at the bottom left corner.
 */
-inline Vector2 ToPixelAtlasImageSpace(Vector2 TileAtlasSpace, int AtlasHeight)
+inline Vector2 TileAtlasToPixelImage(Vector2 TileAtlasSpace, int AtlasHeight)
 {
 	int ImageSpaceCoordinateX = (int)(TileAtlasSpace.x * ATLAS_TILE_SIZE);
 
@@ -132,4 +132,21 @@ inline Vector2 ToPixelAtlasImageSpace(Vector2 TileAtlasSpace, int AtlasHeight)
 
 	Vector2 ImageSpaceCoordinates = Vector2((float)ImageSpaceCoordinateX, (float)ImageSpaceCoordinateY);
 	return ImageSpaceCoordinates;
+}
+
+/*
+Switch a pixel coordinate from atlas space to image space or vice versa.
+Both ranges from 0 to atlas width and height.
+Image space origin is at bootom left corner, atlas space one is at top left corner.
+*/
+inline Vector2 SwitchTextureSpace(Vector2 PixelCoordinate, int AtlasHeight)
+{
+	int NewX = (int)PixelCoordinate.x;
+
+	int ExtractedY = (int)PixelCoordinate.y;
+	int ReversedY = ExtractedY - (AtlasHeight - ATLAS_TILE_SIZE);
+	int NewY = ReversedY * -1;
+
+	Vector2 NewCoordinates = Vector2((float)NewX, (float)NewY);
+	return NewCoordinates;
 }

@@ -56,7 +56,7 @@ void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight)
 		Tile& DeletedTile = Tiles[TileIndex];
 		LastTile.CutPasteTo(DeletedTile, AtlasHeight);
 		Tiles.pop_back();
-		size_t MovedTileIdx = ToSparseIndex(Tiles[TileIndex].GetGridPosition());
+		size_t MovedTileIdx = GridToIndex(Tiles[TileIndex].GetGridPosition());
 		Sparse[MovedTileIdx] = TileIndex;
 		Sparse[SparseIndex] = INVALID_INDEX;
 	}
@@ -86,7 +86,7 @@ void Grid::DrawLines()
 	}
 }
 
-void Grid::Save()
+void Grid::Save(int AtlasHeight)
 {
 	std::string PosXField = "PosX";
 	std::string PosYField = "PosY";
@@ -99,17 +99,18 @@ void Grid::Save()
 	for (int i = 0; i < Tiles.size(); i++)
 	{
 		Vector2 TileGridPosition = Tiles[i].GetGridPosition();
-		Vector2 WorldPosition = Vector2AddValue(ToWorldSpace(TileGridPosition), SAVING_OFFSET);
-		Vector2 AtlasPosition = Tiles[i].GetAtlasTilePosition();
+		Vector2 WorldPosition = Vector2AddValue(GridToWorld(TileGridPosition), SAVING_OFFSET);
+		Vector2 AtlasPosition = Tiles[i].GetAtlasPixelPosition();
+		Vector2 ImageSpacePosition = SwitchTextureSpace(AtlasPosition, AtlasHeight);
 		Vector2 Dimensions = Vector2((float)TILE_SIZE, (float)TILE_SIZE);
-		std::string TileId = std::to_string(ToSparseIndex(TileGridPosition));
+		std::string TileId = std::to_string(GridToIndex(TileGridPosition));
 
 		Content += Indentation + '"' + "Tile" + TileId + '"' + " :\n";
 		Content += Indentation + "{\n";
 		Content += Indentation + Indentation + '"' + PosXField + '"' + " : " + std::to_string((int)WorldPosition.x) + ",\n";
 		Content += Indentation + Indentation + '"' + PosYField + '"' + " : " + std::to_string((int)WorldPosition.y) + ",\n";
-		Content += Indentation + Indentation + '"' + AtlasPosXField + '"' + " : " + std::to_string((int)AtlasPosition.x) + ",\n";
-		Content += Indentation + Indentation + '"' + AtlasPosYField + '"' + " : " + std::to_string((int)AtlasPosition.y) + "\n";
+		Content += Indentation + Indentation + '"' + AtlasPosXField + '"' + " : " + std::to_string((int)ImageSpacePosition.x) + ",\n";
+		Content += Indentation + Indentation + '"' + AtlasPosYField + '"' + " : " + std::to_string((int)ImageSpacePosition.y) + "\n";
 		if (i == Tiles.size() - 1)
 		{
 			Content += Indentation + "}\n";
@@ -153,11 +154,12 @@ int Grid::OpenTileMap(const std::string& FileName, int AtlasHeight)
 	{
 		int WorldPosX = TileData.at("PosX") - SAVING_OFFSET;
 		int WorldPosY = TileData.at("PosY") - SAVING_OFFSET;
-		int AtlasPosX = TileData.at("AtlasX");
-		int AtlasPosY = TileData.at("AtlasY");
-		Vector2 GridPosition = ToGridSpace(Vector2((float)WorldPosX, (float)WorldPosY));
-		Vector2 AtlasPosition = Vector2((float)AtlasPosX, (float)AtlasPosY);
-		size_t SparseIndex = ToSparseIndex(GridPosition);
+		int ImagePosX = TileData.at("AtlasX");
+		int ImagePosY = TileData.at("AtlasY");
+		Vector2 ImagePosition = Vector2((float)ImagePosX, (float)ImagePosY);
+		Vector2 AtlasPosition = SwitchTextureSpace(ImagePosition, AtlasHeight);
+		Vector2 GridPosition = WorldToGrid(Vector2((float)WorldPosX, (float)WorldPosY));
+		size_t SparseIndex = GridToIndex(GridPosition);
 		
 		AddTile(SparseIndex, GridPosition, AtlasPosition, AtlasHeight);
 	}

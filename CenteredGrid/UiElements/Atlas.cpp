@@ -46,7 +46,7 @@ void Atlas::RegisterTilePressed(Vector2 ScreenMousePosition)
 {
 	Vector2 AtlasOrigin = Vector2(Area.x, Area.y);
 	int AtlasHeight = CurrentTexture.height;
-	LastAtlasTilePressed = ToTileScreenAtlasSpace(ScreenMousePosition, AtlasOrigin, AtlasHeight);
+	LastAtlasTilePressed = ScreenToTileAtlas(ScreenMousePosition, AtlasOrigin, AtlasHeight);
 }
 
 Vector2 Atlas::GetAtlasTilePressed()

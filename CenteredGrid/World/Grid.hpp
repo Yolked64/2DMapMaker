@@ -18,7 +18,7 @@ class Grid
 		void RemoveTile(size_t SparseIndex, int AtlasHeight);
 		void ToggleLineDisplay();
 
-		void Save();
+		void Save(int AtlasHeight);
 		int OpenTileMap(const std::string& FileName, int AtlasHeight);
 	private:
 		int Size;
