@@ -147,6 +147,14 @@
     <ClCompile Include="World\Tile.cpp" />
     <ClCompile Include="World\Viewer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\Atlas.png" />
+    <Image Include="Textures\AtlasTest.png" />
+    <Image Include="Textures\TileMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tilemaps\Map.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

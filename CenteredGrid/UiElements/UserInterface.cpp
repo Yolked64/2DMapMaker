@@ -206,5 +206,13 @@ void UserInterface::HandleInputs()
 			size_t SparseIndex = GridToIndex(ClickedCase);
 			GridMap->RemoveTile(SparseIndex, CurrentTextureheight);
 		}
+		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_W))
+		{
+			std::cout << "Reversing time and space \n";
+		}
+		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_Y))
+		{
+			std::cout << "UnReversing time and space \n";
+		}
 	}
 }
