@@ -6,6 +6,16 @@
 #include "Tile.hpp"
 #include "../json.hpp"
 
+struct ActionData
+{
+	size_t SparseIndex;
+	Vector2 GridPosition;
+	Vector2 AtlasPosition;
+	int AtlasHeight;
+
+	bool TileAddtion;
+};
+
 using json = nlohmann::json;
 
 class Grid
@@ -14,9 +24,11 @@ class Grid
 		Grid(int WorldSize, int TileSize);
 
 		void Draw(const Texture& Atlas);
-		void AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight);
-		void RemoveTile(size_t SparseIndex, int AtlasHeight);
+		void AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight, bool PlayerAction = true);
+		void RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction = true);
 		void ToggleLineDisplay();
+
+		void ReverseLastAction();
 
 		void Save(int AtlasHeight);
 		int OpenTileMap(const std::string& FileName, int AtlasHeight);
@@ -28,6 +40,7 @@ class Grid
 
 		std::vector<size_t> Sparse;
 		std::vector<Tile> Tiles;
+		std::vector<ActionData> PastActions;
 
 		void DrawLines();
 };

@@ -208,7 +208,7 @@ void UserInterface::HandleInputs()
 		}
 		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_W))
 		{
-			std::cout << "Reversing time and space \n";
+			GridMap->ReverseLastAction();
 		}
 		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_Y))
 		{

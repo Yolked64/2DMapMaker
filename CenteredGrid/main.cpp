@@ -4,6 +4,7 @@ int main()
 {
 	SetConfigFlags(FLAG_WINDOW_HIGHDPI);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Grid is now centered");
+	SetTargetFPS(FPS);
 	UserInterface App = UserInterface("Atlas.png");
 	while (!WindowShouldClose())
 	{

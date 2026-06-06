@@ -15,7 +15,7 @@ void Grid::ToggleLineDisplay()
 	DisplayLines = !DisplayLines;
 }
 
-void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight)
+void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight, bool PlayerAction)
 {
 	if (SparseIndex >= AmountOfTiles)
 	{
@@ -35,9 +35,20 @@ void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPositi
 			PreviousTile.Set(GridPosition, AtlasPosition, AtlasHeight);
 		}
 	}
+	if (PlayerAction)
+	{
+		ActionData LastAction;
+		LastAction.SparseIndex = SparseIndex;
+		LastAction.GridPosition = GridPosition;
+		LastAction.AtlasPosition = AtlasPosition;
+		LastAction.AtlasHeight = AtlasHeight;
+		LastAction.TileAddtion = true;
+		PastActions.push_back(LastAction);
+	}
+
 }
 
-void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight)
+void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction)
 {
 	if (SparseIndex > AmountOfTiles || Sparse[SparseIndex] == INVALID_INDEX)
 	{
@@ -45,6 +56,16 @@ void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight)
 	}
 	size_t TileIndex = Sparse[SparseIndex];
 	size_t LastTileIndex = Tiles.size() - 1;
+	if (PlayerAction)
+	{
+		ActionData LastAction;
+		LastAction.SparseIndex = SparseIndex;
+		LastAction.GridPosition = Tiles[TileIndex].GetGridPosition();
+		LastAction.AtlasPosition = Tiles[TileIndex].GetAtlasPixelPosition();
+		LastAction.AtlasHeight = AtlasHeight;
+		LastAction.TileAddtion = false;
+		PastActions.push_back(LastAction);
+	}
 	if (TileIndex == LastTileIndex)
 	{
 		Tiles.pop_back();
@@ -83,6 +104,24 @@ void Grid::DrawLines()
 	for (int Row = -Size; Row <= Size; Row += TileSize)
 	{
 		DrawLine(-Size, Row, Size, Row, GRID_COLOR);
+	}
+}
+
+void Grid::ReverseLastAction()
+{
+	if (PastActions.size() == 0)
+	{
+		return;
+	}
+	ActionData LastAction = PastActions.back();
+	PastActions.pop_back();
+	if (LastAction.TileAddtion)
+	{
+		RemoveTile(LastAction.SparseIndex, LastAction.AtlasHeight, false);
+	}
+	else
+	{
+		AddTile(LastAction.SparseIndex, LastAction.GridPosition, LastAction.AtlasPosition, LastAction.AtlasHeight, false);
 	}
 }
 
