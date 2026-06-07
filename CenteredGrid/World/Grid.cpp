@@ -15,6 +15,17 @@ void Grid::ToggleLineDisplay()
 	DisplayLines = !DisplayLines;
 }
 
+void Grid::AddTileToCurrentStroke(size_t SparseIndex, int AtlasHeight, Vector2 GridPosition, Vector2 AtlasPosition)
+{
+	ActionData LastAction;
+	LastAction.SparseIndex = SparseIndex;
+	LastAction.GridPosition = GridPosition;
+	LastAction.AtlasPosition = AtlasPosition;
+	LastAction.AtlasHeight = AtlasHeight;
+	LastAction.TileAddtion = true;
+	StrokeActions.push_back(LastAction);
+}
+
 void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight, bool PlayerAction)
 {
 	if (SparseIndex >= AmountOfTiles)
@@ -37,13 +48,7 @@ void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPositi
 	}
 	if (PlayerAction)
 	{
-		ActionData LastAction;
-		LastAction.SparseIndex = SparseIndex;
-		LastAction.GridPosition = GridPosition;
-		LastAction.AtlasPosition = AtlasPosition;
-		LastAction.AtlasHeight = AtlasHeight;
-		LastAction.TileAddtion = true;
-		StrokeActions.push_back(LastAction);
+		AddTileToCurrentStroke(SparseIndex, AtlasHeight, GridPosition, AtlasPosition);
 	}
 
 }
@@ -58,13 +63,7 @@ void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction)
 	size_t LastTileIndex = Tiles.size() - 1;
 	if (PlayerAction)
 	{
-		ActionData LastAction;
-		LastAction.SparseIndex = SparseIndex;
-		LastAction.GridPosition = Tiles[TileIndex].GetGridPosition();
-		LastAction.AtlasPosition = Tiles[TileIndex].GetAtlasPixelPosition();
-		LastAction.AtlasHeight = AtlasHeight;
-		LastAction.TileAddtion = false;
-		StrokeActions.push_back(LastAction);
+		AddTileToCurrentStroke(SparseIndex, AtlasHeight, Tiles[TileIndex].GetGridPosition(), Tiles[TileIndex].GetAtlasPixelPosition());
 	}
 	if (TileIndex == LastTileIndex)
 	{

@@ -50,4 +50,5 @@ class Grid
 		std::vector<ActionData> StrokeActions;
 
 		void DrawLines();
+		void AddTileToCurrentStroke(size_t SparseIndex, int AtlasHeight, Vector2 GridPosition = Vector2Zero(), Vector2 AtlasPosition = Vector2Zero());
 };
