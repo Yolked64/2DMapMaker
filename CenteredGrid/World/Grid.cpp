@@ -139,6 +139,29 @@ void Grid::ReverseLastStroke()
 			AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
 		}
 	}
+	ReversedStrokes.push_back(LastStroke);
+}
+
+void Grid::RedoLastStroke()
+{
+	if (ReversedStrokes.size() == 0)
+	{
+		return;
+	}
+	std::vector<ActionData> LastStroke = ReversedStrokes.back();
+	ReversedStrokes.pop_back();
+	for (ActionData& Action : LastStroke)
+	{
+		if (Action.TileAddtion)
+		{
+			AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
+		}
+		else
+		{
+			RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
+		}
+	}
+	PastStrokes.push_back(LastStroke);
 }
 
 void Grid::Save(int AtlasHeight)

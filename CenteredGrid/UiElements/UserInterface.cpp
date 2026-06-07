@@ -228,7 +228,7 @@ void UserInterface::HandleInputs()
 		}
 		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_Y))
 		{
-			std::cout << "UnReversing time and space \n";
+			GridMap->RedoLastStroke();
 		}
 	}
 }

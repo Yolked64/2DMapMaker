@@ -29,6 +29,7 @@ class Grid
 		void ToggleLineDisplay();
 
 		void ReverseLastStroke();
+		void RedoLastStroke();
 		void BeginStrokeMode();
 		void QuiteStrokeMode();
 
@@ -45,6 +46,7 @@ class Grid
 		std::vector<size_t> Sparse;
 		std::vector<Tile> Tiles;
 		std::vector<std::vector<ActionData>> PastStrokes;
+		std::vector<std::vector<ActionData>> ReversedStrokes;
 		std::vector<ActionData> StrokeActions;
 
 		void DrawLines();
