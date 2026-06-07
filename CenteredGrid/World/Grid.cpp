@@ -43,7 +43,7 @@ void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPositi
 		LastAction.AtlasPosition = AtlasPosition;
 		LastAction.AtlasHeight = AtlasHeight;
 		LastAction.TileAddtion = true;
-		PastActions.push_back(LastAction);
+		StrokeActions.push_back(LastAction);
 	}
 
 }
@@ -64,7 +64,7 @@ void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction)
 		LastAction.AtlasPosition = Tiles[TileIndex].GetAtlasPixelPosition();
 		LastAction.AtlasHeight = AtlasHeight;
 		LastAction.TileAddtion = false;
-		PastActions.push_back(LastAction);
+		StrokeActions.push_back(LastAction);
 	}
 	if (TileIndex == LastTileIndex)
 	{
@@ -107,21 +107,37 @@ void Grid::DrawLines()
 	}
 }
 
-void Grid::ReverseLastAction()
+void Grid::BeginStrokeMode()
 {
-	if (PastActions.size() == 0)
+	StrokeMode = true;
+}
+
+void Grid::QuiteStrokeMode()
+{
+	StrokeMode = false;
+	PastStrokes.push_back(StrokeActions);
+	StrokeActions.clear();
+	StrokeActions.shrink_to_fit();
+}
+
+void Grid::ReverseLastStroke()
+{
+	if (PastStrokes.size() == 0)
 	{
 		return;
 	}
-	ActionData LastAction = PastActions.back();
-	PastActions.pop_back();
-	if (LastAction.TileAddtion)
+	std::vector<ActionData> LastStroke = PastStrokes.back();
+	PastStrokes.pop_back();
+	for (ActionData& Action : LastStroke)
 	{
-		RemoveTile(LastAction.SparseIndex, LastAction.AtlasHeight, false);
-	}
-	else
-	{
-		AddTile(LastAction.SparseIndex, LastAction.GridPosition, LastAction.AtlasPosition, LastAction.AtlasHeight, false);
+		if (Action.TileAddtion)
+		{
+			RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
+		}
+		else
+		{
+			AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
+		}
 	}
 }
 

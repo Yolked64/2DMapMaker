@@ -27,3 +27,12 @@ int main()
 /* ----OPTIONAL-------
 Dont display characters inside the input box when they are out of it
 */
+
+// CONTROL Z WORKS BUT IT STORES MULTIPLE TILES MAYBE DO IT ONCE PER STROKE
+/*
+Do a func to begin a pencil mode when mouse is pressed
+add the tiles changed to a vector if the mode is true
+when the button is no longer held, add that vector to actions
+then clear the previous vector
+to detetec when to add check if the mode is false and if the vector is not empty
+*/

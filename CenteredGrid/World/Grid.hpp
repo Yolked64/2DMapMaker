@@ -28,7 +28,9 @@ class Grid
 		void RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction = true);
 		void ToggleLineDisplay();
 
-		void ReverseLastAction();
+		void ReverseLastStroke();
+		void BeginStrokeMode();
+		void QuiteStrokeMode();
 
 		void Save(int AtlasHeight);
 		int OpenTileMap(const std::string& FileName, int AtlasHeight);
@@ -36,11 +38,14 @@ class Grid
 		int Size;
 		int TileSize;
 		int AmountOfTiles;
+
 		bool DisplayLines = false;
+		bool StrokeMode = false;
 
 		std::vector<size_t> Sparse;
 		std::vector<Tile> Tiles;
-		std::vector<ActionData> PastActions;
+		std::vector<std::vector<ActionData>> PastStrokes;
+		std::vector<ActionData> StrokeActions;
 
 		void DrawLines();
 };
