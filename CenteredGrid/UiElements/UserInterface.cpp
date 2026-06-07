@@ -191,11 +191,7 @@ void UserInterface::HandleInputs()
 		{
 			GridMap->ToggleLineDisplay();
 		}
-		if (LeftMouseButtonPressed)
-		{
-			GridMap->BeginStrokeMode();
-		}
-		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		if (LeftMouseButtonPressed || IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		{
 			Vector2 ClickedCase = WorldToGrid(MouseWorldPosition);
 			if (ClickedCase.x >= 0 && ClickedCase.y >= 0 && ClickedCase.x <= GRID_WORLD_SIZE && ClickedCase.y <= GRID_WORLD_SIZE)
@@ -206,13 +202,9 @@ void UserInterface::HandleInputs()
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
-			GridMap->QuiteStrokeMode();
+			GridMap->RegisterStroke();
 		}
-		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-		{
-			GridMap->BeginStrokeMode();
-		}
-		if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 		{
 			Vector2 ClickedCase = WorldToGrid(MouseWorldPosition);
 			size_t SparseIndex = GridToIndex(ClickedCase);
@@ -220,7 +212,7 @@ void UserInterface::HandleInputs()
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_RIGHT))
 		{
-			GridMap->QuiteStrokeMode();
+			GridMap->RegisterStroke();
 		}
 		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_W))
 		{

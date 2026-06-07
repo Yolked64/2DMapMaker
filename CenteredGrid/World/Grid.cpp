@@ -106,14 +106,9 @@ void Grid::DrawLines()
 	}
 }
 
-void Grid::BeginStrokeMode()
+void Grid::RegisterStroke()
 {
-	StrokeMode = true;
-}
 
-void Grid::QuiteStrokeMode()
-{
-	StrokeMode = false;
 	PastStrokes.push_back(StrokeActions);
 	StrokeActions.clear();
 	StrokeActions.shrink_to_fit();

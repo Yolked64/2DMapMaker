@@ -30,8 +30,7 @@ class Grid
 
 		void ReverseLastStroke();
 		void RedoLastStroke();
-		void BeginStrokeMode();
-		void QuiteStrokeMode();
+		void RegisterStroke();
 
 		void Save(int AtlasHeight);
 		int OpenTileMap(const std::string& FileName, int AtlasHeight);
@@ -41,7 +40,6 @@ class Grid
 		int AmountOfTiles;
 
 		bool DisplayLines = false;
-		bool StrokeMode = false;
 
 		std::vector<size_t> Sparse;
 		std::vector<Tile> Tiles;
