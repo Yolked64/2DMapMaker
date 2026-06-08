@@ -57,7 +57,6 @@ void UserInterface::Update()
 	{
 		TilemapLoader->Update();
 	}
-	
 }
 
 void UserInterface::Draw()
@@ -93,6 +92,7 @@ void UserInterface::HandleInputs()
 	Vector2 MouseWorldPosition = GetScreenToWorld2D(MousePosition, MyCamera->GetCamera());
 	float DeltaT = GetFrameTime();
 	bool LeftMouseButtonPressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+	bool CtrlPressed = IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL);
 	int CurrentTextureHeight = TextureManager->GetTextureHeight();
 	if (InsideUi)
 	{
@@ -163,30 +163,6 @@ void UserInterface::HandleInputs()
 	{
 		float MouseScrollAmount = GetMouseWheelMove();
 		int CurrentTextureheight = TextureManager->GetTextureHeight();
-		if (MouseScrollAmount > 0)
-		{
-			MyCamera->MultiplyZoom();
-		}
-		else if (MouseScrollAmount < 0)
-		{
-			MyCamera->DivideZoom();
-		}
-		if (IsKeyPressed(KEY_W) || IsKeyDown(KEY_W))
-		{
-			MyCamera->Move(0, -1, DeltaT);
-		}
-		if (IsKeyPressed(KEY_A) || IsKeyDown(KEY_A))
-		{
-			MyCamera->Move(-1, 0, DeltaT);
-		}
-		if (IsKeyPressed(KEY_S) || IsKeyDown(KEY_S))
-		{
-			MyCamera->Move(0, 1, DeltaT);
-		}
-		if (IsKeyPressed(KEY_D) || IsKeyDown(KEY_D))
-		{
-			MyCamera->Move(1, 0, DeltaT);
-		}
 		if (IsKeyPressed(KEY_F))
 		{
 			GridMap->ToggleLineDisplay();
@@ -214,13 +190,37 @@ void UserInterface::HandleInputs()
 		{
 			GridMap->RegisterStroke();
 		}
-		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_W))
+		if (CtrlPressed && IsKeyPressed(KEY_W))
 		{
 			GridMap->ReverseLastStroke();
 		}
-		if ((IsKeyPressed(KEY_LEFT_CONTROL) || IsKeyDown(KEY_LEFT_CONTROL)) && IsKeyPressed(KEY_Y))
+		if (CtrlPressed && IsKeyPressed(KEY_Y))
 		{
 			GridMap->RedoLastStroke();
+		}
+		if (MouseScrollAmount > 0)
+		{
+			MyCamera->MultiplyZoom();
+		}
+		else if (MouseScrollAmount < 0)
+		{
+			MyCamera->DivideZoom();
+		}
+		if ((IsKeyPressed(KEY_W) || IsKeyDown(KEY_W)) && !CtrlPressed)
+		{
+			MyCamera->Move(0, -1, DeltaT);
+		}
+		if ((IsKeyPressed(KEY_A) || IsKeyDown(KEY_A)) && !CtrlPressed)
+		{
+			MyCamera->Move(-1, 0, DeltaT);
+		}
+		if ((IsKeyPressed(KEY_S) || IsKeyDown(KEY_S)) && !CtrlPressed)
+		{
+			MyCamera->Move(0, 1, DeltaT);
+		}
+		if ((IsKeyPressed(KEY_D) || IsKeyDown(KEY_D)) && !CtrlPressed)
+		{
+			MyCamera->Move(1, 0, DeltaT);
 		}
 	}
 }

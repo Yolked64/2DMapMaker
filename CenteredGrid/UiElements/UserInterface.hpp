@@ -7,6 +7,8 @@
 #include "Button.hpp"
 #include "InputBox.hpp"
 
+#include <vector>
+
 class UserInterface
 {
 	public:
@@ -21,6 +23,7 @@ class UserInterface
 		bool InsideTextureOpener = false;
 		bool InsideTilemapLoader = false;
 		bool InsideSave = false;
+
 
 		float UiSreenPaddingX = 0.85f;
 		Color UiColor = UI_COLOR;
