@@ -7,7 +7,30 @@
 #include "Button.hpp"
 #include "InputBox.hpp"
 
-#include <vector>
+#include <unordered_map>
+
+enum INPUT
+{
+	LEFT_CLICKED,
+	RIGHT_CLICKED,
+	DELETE_CHAR,
+	SEND_STRING,
+	TOGGLE_LINE_DISPLAY,
+	GO_UP,
+	GO_LEFT,
+	GO_DOWN,
+	GO_RIGHT,
+	UNDO_ACTION,
+	DO_ACTION
+};
+
+enum INPUT_TYPE
+{
+	PRESSED,
+	DOWN,
+	RELEASED,
+	UNTOUCHED
+};
 
 class UserInterface
 {
@@ -24,6 +47,7 @@ class UserInterface
 		bool InsideTilemapLoader = false;
 		bool InsideSave = false;
 
+		std::unordered_map<INPUT, INPUT_TYPE> Keys;
 
 		float UiSreenPaddingX = 0.85f;
 		Color UiColor = UI_COLOR;
@@ -44,4 +68,5 @@ class UserInterface
 
 		void DisplayUiElements();
 		void DisplayMouseWorldCoordinates();
+		void RegisterInputs();
 };
