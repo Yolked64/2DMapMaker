@@ -82,11 +82,14 @@ void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction)
 	}
 }
 
-void Grid::Draw(const Texture& Atlas)
+void Grid::Draw(const Texture& Atlas, Rectangle& DisplayedRegion)
 {
 	for (Tile& Case : Tiles)
 	{
-		Case.Draw(Atlas);
+		if (CheckCollisionRecs(DisplayedRegion, Case.GetTileRectangle()))
+		{
+			Case.Draw(Atlas);
+		}
 	}
 	if (DisplayLines)
 	{

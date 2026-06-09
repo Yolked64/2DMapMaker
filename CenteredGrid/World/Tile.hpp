@@ -18,6 +18,7 @@ class Tile
 
 		Vector2 GetGridPosition();
 		Vector2 GetAtlasPixelPosition();
+		Rectangle GetTileRectangle();
 	private:
 		Vector2 GridPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
 		Vector2 WorldPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);

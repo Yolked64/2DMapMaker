@@ -62,3 +62,8 @@ Vector2 Tile::GetAtlasPixelPosition()
 {
 	return AtlasPixelPosition;
 }
+
+Rectangle Tile::GetTileRectangle()
+{
+	return Rectangle(WorldPosition.x, WorldPosition.y, (float)TILE_SIZE, (float)TILE_SIZE);
+}

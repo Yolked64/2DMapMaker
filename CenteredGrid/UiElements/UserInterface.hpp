@@ -25,6 +25,7 @@ class UserInterface
 		float UiSreenPaddingX = 0.85f;
 		Color UiColor = UI_COLOR;
 		Rectangle UiPosition;
+		Rectangle WorldRegionDisplayed = Rectangle(0, 0, 0, 0);
 
 		Vector2 MouseCoordinatesPosition;
 		int MouseTextSize = 24;

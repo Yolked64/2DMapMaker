@@ -49,6 +49,14 @@ void UserInterface::Update()
 	InsideTilemapLoader = TilemapLoader->IsHoverred(MousePosition);
 	InsideSave = SaveButton->IsHoverred(MousePosition);
 
+	Vector2 ViewUperLeftCorner = GetScreenToWorld2D(Vector2(0 - VIEW_OFFSET, 0 - VIEW_OFFSET), MyCamera->GetCamera());
+	Vector2 ViewBottomRightCorner = GetScreenToWorld2D(Vector2(SCREEN_WIDTH + VIEW_OFFSET, SCREEN_HEIGHT + VIEW_OFFSET), MyCamera->GetCamera());
+
+	float RegionWidth = ViewBottomRightCorner.x - ViewUperLeftCorner.x;
+	float RegionHeight = ViewBottomRightCorner.y - ViewUperLeftCorner.y;
+
+	WorldRegionDisplayed = Rectangle(ViewUperLeftCorner.x, ViewUperLeftCorner.y, RegionWidth, RegionWidth);
+
 	if (InsideTextureOpener)
 	{
 		TextureOpener->Update();
@@ -63,7 +71,7 @@ void UserInterface::Draw()
 {
 	const Texture& TextureUsed = TextureManager->GetTexture();
 	MyCamera->UseCamera();
-	GridMap->Draw(TextureUsed);
+	GridMap->Draw(TextureUsed, WorldRegionDisplayed);
 	MyCamera->QuitCamera();
 	DisplayUiElements();
 }

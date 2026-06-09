@@ -38,6 +38,7 @@ constexpr int FPS = 0;
 
 constexpr int GRID_WORLD_SIZE = (2 * WORLD_SIZE) / TILE_SIZE;
 constexpr int SAVING_OFFSET = TILE_SIZE / 2;
+constexpr int VIEW_OFFSET = 2 * TILE_SIZE;
 
 /*
 Convert a grid position to world position.

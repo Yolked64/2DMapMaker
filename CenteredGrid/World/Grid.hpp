@@ -23,7 +23,7 @@ class Grid
 	public:
 		Grid(int WorldSize, int TileSize);
 
-		void Draw(const Texture& Atlas);
+		void Draw(const Texture& Atlas, Rectangle& DisplayedRegion);
 		void AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight, bool PlayerAction = true);
 		void RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction = true);
 		void ToggleLineDisplay();

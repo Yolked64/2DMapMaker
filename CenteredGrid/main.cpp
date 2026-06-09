@@ -23,7 +23,7 @@ int main()
 // Add multiple tilemap seeable at the same time 
 // Also make 2 type of tile map,  tile based and pixel based, this would make tiny details such as placing flowers possible
 // Add a filked to select the name of map file
-// Only display what you see
+// MAKE A PROPER UI
 
 /* ----OPTIONAL-------
 Dont display characters inside the input box when they are out of it
