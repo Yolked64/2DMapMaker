@@ -16,6 +16,7 @@
     <ClInclude Include="UiElements\Button.hpp" />
     <ClInclude Include="UiElements\Atlas.hpp" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="UiElements\UiItem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
