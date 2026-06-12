@@ -144,6 +144,7 @@
     <ClCompile Include="UiElements\InputBox.cpp" />
     <ClCompile Include="UiElements\App.cpp" />
     <ClInclude Include="UiElements\UiItem.hpp" />
+    <ClCompile Include="UiElements\UiItem.cpp" />
     <ClCompile Include="World\Grid.cpp" />
     <ClCompile Include="World\Tile.cpp" />
     <ClCompile Include="World\Viewer.cpp" />

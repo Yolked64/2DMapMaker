@@ -27,6 +27,7 @@
     <ClCompile Include="UiElements\InputBox.cpp" />
     <ClCompile Include="UiElements\Button.cpp" />
     <ClCompile Include="UiElements\Atlas.cpp" />
+    <ClCompile Include="UiElements\UiItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\Atlas.png">
