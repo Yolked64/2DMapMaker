@@ -7,10 +7,10 @@
 #include "Button.hpp"
 #include "InputBox.hpp"
 
-class UserInterface
+class App
 {
 	public:
-		UserInterface(const std::string& AtlasFilePath);
+		App(const std::string& AtlasFilePath);
 
 		void Update();
 		void Draw();

@@ -11,7 +11,7 @@
     <ClInclude Include="World\Grid.hpp" />
     <ClInclude Include="World\Tile.hpp" />
     <ClInclude Include="World\Viewer.hpp" />
-    <ClInclude Include="UiElements\UserInterface.hpp" />
+    <ClInclude Include="UiElements\App.hpp" />
     <ClInclude Include="UiElements\InputBox.hpp" />
     <ClInclude Include="UiElements\Button.hpp" />
     <ClInclude Include="UiElements\Atlas.hpp" />
@@ -22,9 +22,23 @@
     <ClCompile Include="World\Grid.cpp" />
     <ClCompile Include="World\Tile.cpp" />
     <ClCompile Include="World\Viewer.cpp" />
-    <ClCompile Include="UiElements\UserInterface.cpp" />
+    <ClCompile Include="UiElements\App.cpp" />
     <ClCompile Include="UiElements\InputBox.cpp" />
     <ClCompile Include="UiElements\Button.cpp" />
     <ClCompile Include="UiElements\Atlas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\Atlas.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Textures\AtlasTest.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Textures\TileMap.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tilemaps\Map.json" />
   </ItemGroup>
 </Project>

@@ -1,18 +1,18 @@
-#include "UiElements/UserInterface.hpp"
+#include "UiElements/App.hpp"
 
 int main()
 {
 	SetConfigFlags(FLAG_WINDOW_HIGHDPI);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Grid is now centered");
 	SetTargetFPS(FPS);
-	UserInterface App = UserInterface("Atlas.png");
+	App TileEditor = App("Atlas.png");
 	while (!WindowShouldClose())
 	{
-		App.HandleInputs();
-		App.Update();
+		TileEditor.HandleInputs();
+		TileEditor.Update();
 		BeginDrawing();
 		ClearBackground(BACKGROUND);
-		App.Draw();
+		TileEditor.Draw();
 		DrawFPS(100, 100);
 		EndDrawing();
 	}

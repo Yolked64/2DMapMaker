@@ -1,6 +1,6 @@
-#include "UserInterface.hpp"
+#include "App.hpp"
 
-UserInterface::UserInterface(const std::string& AtlasFilePath)
+App::App(const std::string& AtlasFilePath)
 {
 	UiPosition.x = UiSreenPaddingX * SCREEN_WIDTH;
 	UiPosition.y = 0.0f;
@@ -40,7 +40,7 @@ UserInterface::UserInterface(const std::string& AtlasFilePath)
 	MouseCoordinatesPosition.y = 0.95f * SCREEN_HEIGHT;
 }
 
-void UserInterface::Update()
+void App::Update()
 {
 	Vector2 MousePosition = GetMousePosition();
 	InsideUi = CheckCollisionPointRec(MousePosition, UiPosition);
@@ -67,7 +67,7 @@ void UserInterface::Update()
 	}
 }
 
-void UserInterface::Draw()
+void App::Draw()
 {
 	const Texture& TextureUsed = TextureManager->GetTexture();
 	MyCamera->UseCamera();
@@ -76,7 +76,7 @@ void UserInterface::Draw()
 	DisplayUiElements();
 }
 
-void UserInterface::DisplayUiElements()
+void App::DisplayUiElements()
 {
 	DrawRectangleRec(UiPosition, UiColor);
 	TextureManager->Draw();
@@ -86,7 +86,7 @@ void UserInterface::DisplayUiElements()
 	DisplayMouseWorldCoordinates();
 }
 
-void UserInterface::DisplayMouseWorldCoordinates()
+void App::DisplayMouseWorldCoordinates()
 {
 	Vector2 MousePosition = GetMousePosition();
 	Vector2 WorldMousePosition = Vector2AddValue(GetScreenToWorld2D(MousePosition, MyCamera->GetCamera()), SAVING_OFFSET);
@@ -94,7 +94,7 @@ void UserInterface::DisplayMouseWorldCoordinates()
 	DrawText(DisplayedText.c_str(), (int)MouseCoordinatesPosition.x, (int)MouseCoordinatesPosition.y, MouseTextSize, MouseTextColor);
 }
 
-void UserInterface::HandleInputs()
+void App::HandleInputs()
 {
 	Vector2 MousePosition = GetMousePosition();
 	Vector2 MouseWorldPosition = GetScreenToWorld2D(MousePosition, MyCamera->GetCamera());

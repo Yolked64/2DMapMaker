@@ -132,7 +132,7 @@
     <ClInclude Include="UiElements\Atlas.hpp" />
     <ClInclude Include="UiElements\Button.hpp" />
     <ClInclude Include="UiElements\InputBox.hpp" />
-    <ClInclude Include="UiElements\UserInterface.hpp" />
+    <ClInclude Include="UiElements\App.hpp" />
     <ClInclude Include="World\Grid.hpp" />
     <ClInclude Include="World\Tile.hpp" />
     <ClInclude Include="World\Viewer.hpp" />
@@ -142,7 +142,7 @@
     <ClCompile Include="UiElements\Atlas.cpp" />
     <ClCompile Include="UiElements\Button.cpp" />
     <ClCompile Include="UiElements\InputBox.cpp" />
-    <ClCompile Include="UiElements\UserInterface.cpp" />
+    <ClCompile Include="UiElements\App.cpp" />
     <ClCompile Include="World\Grid.cpp" />
     <ClCompile Include="World\Tile.cpp" />
     <ClCompile Include="World\Viewer.cpp" />
