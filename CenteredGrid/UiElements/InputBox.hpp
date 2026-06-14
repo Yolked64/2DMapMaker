@@ -1,33 +1,30 @@
 #pragma once
 
 #include "../Data.hpp"
+#include "UiItem.hpp"
 
-class InputBox
+class InputBox : public UiItem
 {
 	public:
-		InputBox(Rectangle ScreenPosition, const std::string& WelcomeText);
+		InputBox(Rectangle ScreenPosition, const std::string& WelcomeText, Color Background);
 
-		void Draw();
-		void Update();
+		void Draw() const override;
+		void Update() override;
 
 		void AddCharacter(int AsciiCode);
 		void DeleteLastCharacter();
 		void ResetContentAndDisplayWelcome();
 
-		bool IsHoverred(Vector2 MousePosition);
-		const std::string& GetInput();
+		const std::string& GetInput() const;
 	private:
 		bool DisplayWelcomeText = true;
 
 		std::string WelcomeText = "";
 		std::string TypedText = "";
 
-		Rectangle ScreenPosition;
-		Color Background = GREEN;
-
 		int TextSize = 16;
 		Vector2 TextOffset = Vector2(16, 16);
 		Color TextColor = BLACK;
 
-		void DrawContent();
+		void DrawContent() const;
 };

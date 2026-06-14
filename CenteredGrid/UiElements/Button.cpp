@@ -1,29 +1,21 @@
 #include "Button.hpp"
 
-Button::Button(Rectangle ScreenPosition, const std::string& TextToDisplay)
+Button::Button(Rectangle ScreenPosition, const std::string& TextToDisplay, Color Background) : UiItem()
 {
-	this->ScreenPosition = ScreenPosition;
+	this->Area = ScreenPosition;
 	this->TextToDisplay = TextToDisplay;
+	this->BackgroundColor = Background;
 }
 
-bool Button::IsHoverred(Vector2 MousePosition)
+void Button::DrawContent() const
 {
-	if (CheckCollisionPointRec(MousePosition, ScreenPosition))
-	{
-		return true;
-	}
-	return false;
-}
-
-void Button::DrawContent()
-{
-	Vector2 TextOrigin = Vector2(ScreenPosition.x, ScreenPosition.y);
+	Vector2 TextOrigin = Vector2(Area.x, Area.y);
 	Vector2 TextPosition = Vector2Add(TextOrigin, TextOffset);
 	DrawText(TextToDisplay.c_str(), (int)TextPosition.x, (int)TextPosition.y, TextSize, TextColor);
 }
 
-void Button::Draw()
+void Button::Draw() const
 {
-	DrawRectangleRec(ScreenPosition, Background);
+	UiItem::Draw();
 	DrawContent();
 }

@@ -1,9 +1,10 @@
 #include "InputBox.hpp"
 
-InputBox::InputBox(Rectangle ScreenPosition, const std::string& WelcomeText)
+InputBox::InputBox(Rectangle ScreenPosition, const std::string& WelcomeText, Color Background) : UiItem()
 {
-	this->ScreenPosition = ScreenPosition;
+	this->Area = ScreenPosition;
 	this->WelcomeText = WelcomeText;
+	this->BackgroundColor = Background;
 }
 
 void InputBox::AddCharacter(int AsciiCode)
@@ -25,18 +26,9 @@ void InputBox::ResetContentAndDisplayWelcome()
 	DisplayWelcomeText = true;
 }
 
-bool InputBox::IsHoverred(Vector2 MousePosition)
+void InputBox::DrawContent() const
 {
-	if (CheckCollisionPointRec(MousePosition, ScreenPosition))
-	{
-		return true;
-	}
-	return false;
-}
-
-void InputBox::DrawContent()
-{
-	Vector2 TextOrigin = Vector2(ScreenPosition.x, ScreenPosition.y);
+	Vector2 TextOrigin = Vector2(Area.x, Area.y);
 	Vector2 TextPosition = Vector2Add(TextOrigin, TextOffset);
 	if (DisplayWelcomeText)
 	{
@@ -48,9 +40,9 @@ void InputBox::DrawContent()
 	}
 }
 
-void InputBox::Draw()
+void InputBox::Draw() const
 {
-	DrawRectangleRec(ScreenPosition, Background);
+	UiItem::Draw();
 	DrawContent();
 }
 
@@ -65,7 +57,7 @@ void InputBox::Update()
 		DisplayWelcomeText = true;
 	}
 }
-const std::string& InputBox::GetInput()
+const std::string& InputBox::GetInput() const
 {
 	return TypedText;
 }

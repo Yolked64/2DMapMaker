@@ -1,24 +1,18 @@
 #pragma once
 
 #include "../Data.hpp"
+#include "UiItem.hpp"
 
-class Button
+class Button : public UiItem
 {
 	public:
-		Button(Rectangle ScreenPosition, const std::string& TextToDisplay);
-
-		void Draw();
-
-		bool IsHoverred(Vector2 MousePosition);
+		Button(Rectangle ScreenPosition, const std::string& TextToDisplay, Color Background);
+		void Draw() const override;
 	private:
-		Rectangle ScreenPosition;
 		std::string TextToDisplay;
-
-		Color Background = ORANGE;
-
 		Vector2 TextOffset = Vector2(16, 16);
 		Color TextColor = BLACK;
 		int TextSize = 16;
 
-		void DrawContent();
+		void DrawContent() const;
 };

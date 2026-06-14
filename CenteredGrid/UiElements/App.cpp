@@ -20,21 +20,21 @@ App::App(const std::string& AtlasFilePath)
 	SaveButtonPosition.y = AtlasPosition.y + TextureManager->GetTextureHeight() + 0.02f * SCREEN_HEIGHT;
 	SaveButtonPosition.height = 64;
 	SaveButtonPosition.width = (1 - UiSreenPaddingX) * SCREEN_WIDTH / 2;
-	SaveButton = std::make_unique<Button>(SaveButtonPosition, "Save");
+	SaveButton = std::make_unique<Button>(SaveButtonPosition, "Save", GREEN);
 
 	Rectangle TextureOpenerPosition;
 	TextureOpenerPosition.x = UiSreenPaddingX * SCREEN_WIDTH;
 	TextureOpenerPosition.y = SaveButtonPosition.y + SaveButtonPosition.height + 0.02f * SCREEN_HEIGHT;
 	TextureOpenerPosition.height = 64;
 	TextureOpenerPosition.width = (1 - UiSreenPaddingX) * SCREEN_WIDTH / 2;
-	TextureOpener = std::make_unique<InputBox>(TextureOpenerPosition, "Load texture :");
+	TextureOpener = std::make_unique<InputBox>(TextureOpenerPosition, "Load texture :", GREEN);
 
 	Rectangle TilemapLoaderPosition;
 	TilemapLoaderPosition.x = UiSreenPaddingX * SCREEN_WIDTH;
 	TilemapLoaderPosition.y = TextureOpenerPosition.y + TextureOpenerPosition.height + 0.02f * SCREEN_HEIGHT;
 	TilemapLoaderPosition.height = 64;
 	TilemapLoaderPosition.width = (1 - UiSreenPaddingX) * SCREEN_WIDTH / 2;
-	TilemapLoader = std::make_unique<InputBox>(TilemapLoaderPosition, "Open tilemap :");
+	TilemapLoader = std::make_unique<InputBox>(TilemapLoaderPosition, "Open tilemap :", GREEN);
 
 	MouseCoordinatesPosition.x = UiSreenPaddingX * SCREEN_WIDTH;
 	MouseCoordinatesPosition.y = 0.95f * SCREEN_HEIGHT;
@@ -45,9 +45,9 @@ void App::Update()
 	Vector2 MousePosition = GetMousePosition();
 	InsideUi = CheckCollisionPointRec(MousePosition, UiPosition);
 	InsideAtlas = TextureManager->IsHoverred(MousePosition);
-	InsideTextureOpener = TextureOpener->IsHoverred(MousePosition);
-	InsideTilemapLoader = TilemapLoader->IsHoverred(MousePosition);
-	InsideSave = SaveButton->IsHoverred(MousePosition);
+	InsideTextureOpener = TextureOpener->IsMouseHovering(MousePosition);
+	InsideTilemapLoader = TilemapLoader->IsMouseHovering(MousePosition);
+	InsideSave = SaveButton->IsMouseHovering(MousePosition);
 
 	Vector2 ViewUperLeftCorner = GetScreenToWorld2D(Vector2(0 - VIEW_OFFSET, 0 - VIEW_OFFSET), MyCamera->GetCamera());
 	Vector2 ViewBottomRightCorner = GetScreenToWorld2D(Vector2(SCREEN_WIDTH + VIEW_OFFSET, SCREEN_HEIGHT + VIEW_OFFSET), MyCamera->GetCamera());

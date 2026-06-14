@@ -11,7 +11,7 @@ public:
 	bool IsMouseHovering(Vector2 MousePosition) const;
 	Rectangle GetArea() const;
 	virtual void Draw() const;
-	virtual void Update() = 0;
+	virtual void Update();
 protected:
 	Rectangle Area = Rectangle(0, 0, 0, 0);
 	

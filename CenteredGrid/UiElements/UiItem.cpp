@@ -14,3 +14,8 @@ void UiItem::Draw() const
 {
 	DrawRectangleRec(this->Area, BackgroundColor);
 }
+
+void UiItem::Update()
+{
+
+}
