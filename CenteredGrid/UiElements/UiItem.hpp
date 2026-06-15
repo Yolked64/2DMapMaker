@@ -17,4 +17,6 @@ protected:
 	
 	Color BackgroundColor = BLACK;
 	int BorderWidth = 0;
+
+	virtual void DrawContent() const;
 };

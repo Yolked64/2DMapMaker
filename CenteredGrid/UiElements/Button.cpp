@@ -9,13 +9,13 @@ Button::Button(Rectangle ScreenPosition, const std::string& TextToDisplay, Color
 
 void Button::DrawContent() const
 {
-	Vector2 TextOrigin = Vector2(Area.x, Area.y);
-	Vector2 TextPosition = Vector2Add(TextOrigin, TextOffset);
-	DrawText(TextToDisplay.c_str(), (int)TextPosition.x, (int)TextPosition.y, TextSize, TextColor);
+	Vector2 TextOrigin = Vector2(this->Area.x, this->Area.y);
+	Vector2 TextPosition = Vector2Add(TextOrigin, this->TextOffset);
+	DrawText(this->TextToDisplay.c_str(), (int)TextPosition.x, (int)TextPosition.y, this->TextSize, this->TextColor);
 }
 
 void Button::Draw() const
 {
 	UiItem::Draw();
-	DrawContent();
+	this->DrawContent();
 }

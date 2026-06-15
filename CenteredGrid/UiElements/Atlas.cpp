@@ -2,8 +2,8 @@
 
 Atlas::Atlas(const std::string& AtlasFileName, Vector2 Position)
 {
-	Area.x = Position.x;
-	Area.y = Position.y;
+	this->Area.x = Position.x;
+	this->Area.y = Position.y;
 	int Success = LoadNewAtlas(AtlasFileName);
 	if (Success == -1)
 	{
@@ -11,9 +11,9 @@ Atlas::Atlas(const std::string& AtlasFileName, Vector2 Position)
 	}
 }
 
-bool Atlas::IsHoverred(Vector2 MousePosition)
+bool Atlas::IsHoverred(Vector2 MousePosition) const
 {;
-	if (CheckCollisionPointRec(MousePosition, Area))
+	if (CheckCollisionPointRec(MousePosition, this->Area))
 	{
 		return true;
 	}
@@ -28,38 +28,38 @@ int Atlas::LoadNewAtlas(const std::string& FileName)
 	{
 		return -1;
 	}
-	UnloadTexture(CurrentTexture);				// Beware of this thingy cuz when the object is constructed it unload an undefined data
-	CurrentTexture = NewTexture;
-	Area.width = (float)CurrentTexture.width;
-	Area.height = (float)CurrentTexture.height;
+	UnloadTexture(this->CurrentTexture);				// Beware of this thingy cuz when the object is constructed it unload an undefined data
+	this->CurrentTexture = NewTexture;
+	this->Area.width = (float)this->CurrentTexture.width;
+	this->Area.height = (float)this->CurrentTexture.height;
 	return 0;
 }
 
-void Atlas::Draw()
+void Atlas::Draw() const
 {
-	DrawRectangleRec(Area, Background);
-	Rectangle Source = Rectangle(0, 0, (float)CurrentTexture.width, (float)CurrentTexture.height);
-	DrawTexturePro(CurrentTexture, Source, Area, Origin, Rotation, Tint);
+	DrawRectangleRec(this->Area, this->Background);
+	Rectangle Source = Rectangle(0, 0, (float)this->CurrentTexture.width, (float)this->CurrentTexture.height);
+	DrawTexturePro(this->CurrentTexture, Source, this->Area, this->Origin, this->Rotation, this->Tint);
 }
 
 void Atlas::RegisterTilePressed(Vector2 ScreenMousePosition)
 {
-	Vector2 AtlasOrigin = Vector2(Area.x, Area.y);
-	int AtlasHeight = CurrentTexture.height;
-	LastAtlasTilePressed = ScreenToTileAtlas(ScreenMousePosition, AtlasOrigin, AtlasHeight);
+	Vector2 AtlasOrigin = Vector2(this->Area.x, this->Area.y);
+	int AtlasHeight = this->CurrentTexture.height;
+	this->LastAtlasTilePressed = ScreenToTileAtlas(ScreenMousePosition, AtlasOrigin, AtlasHeight);
 }
 
-Vector2 Atlas::GetAtlasTilePressed()
+Vector2 Atlas::GetAtlasTilePressed() const
 {
-	return LastAtlasTilePressed;
+	return this->LastAtlasTilePressed;
 }
 
-const Texture& Atlas::GetTexture()
+const Texture Atlas::GetTexture() const
 {
-	return CurrentTexture;
+	return this->CurrentTexture;
 }
 
-int Atlas::GetTextureHeight()
+int Atlas::GetTextureHeight() const
 {
-	return CurrentTexture.height;
+	return this->CurrentTexture.height;
 }

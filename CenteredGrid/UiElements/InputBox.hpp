@@ -26,5 +26,5 @@ class InputBox : public UiItem
 		Vector2 TextOffset = Vector2(16, 16);
 		Color TextColor = BLACK;
 
-		void DrawContent() const;
+		void DrawContent() const override;
 };

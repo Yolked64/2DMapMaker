@@ -7,15 +7,15 @@ class Atlas
 	public:
 		Atlas(const std::string& AtlasFileName, Vector2 ScreenPosition);
 
-		void Draw();
+		void Draw() const;
 		void RegisterTilePressed(Vector2 ScreenMousePosition);
 
-		bool IsHoverred(Vector2 ScreenMousePosition);
+		bool IsHoverred(Vector2 ScreenMousePosition) const;
 		int LoadNewAtlas(const std::string& FileName);
 		
-		const Texture& GetTexture();
-		Vector2 GetAtlasTilePressed();
-		int GetTextureHeight();
+		const Texture GetTexture() const;
+		Vector2 GetAtlasTilePressed() const;
+		int GetTextureHeight() const;
 	private:
 		Texture CurrentTexture;
 		

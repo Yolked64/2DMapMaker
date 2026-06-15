@@ -40,6 +40,6 @@ class App
 		std::unique_ptr<InputBox> TextureOpener;
 		std::unique_ptr<InputBox> TilemapLoader;
 
-		void DisplayUiElements();
-		void DisplayMouseWorldCoordinates();
+		void DisplayUiElements() const;
+		void DisplayMouseWorldCoordinates() const;
 };

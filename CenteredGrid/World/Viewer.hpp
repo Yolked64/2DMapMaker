@@ -14,7 +14,7 @@ class WorldDisplayer
 		void UseCamera();
 		void QuitCamera();
 
-		Camera2D& GetCamera();
+		Camera2D GetCamera() const;
 	private:
 		Camera2D Displayer;
 };

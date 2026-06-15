@@ -12,10 +12,15 @@ bool UiItem::IsMouseHovering(Vector2 MousePosition) const
 
 void UiItem::Draw() const
 {
-	DrawRectangleRec(this->Area, BackgroundColor);
+	DrawRectangleRec(this->Area, this->BackgroundColor);
 }
 
 void UiItem::Update()
+{
+
+}
+
+void UiItem::DrawContent() const 
 {
 
 }

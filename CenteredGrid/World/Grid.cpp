@@ -2,17 +2,17 @@
 
 Grid::Grid(int WorldSize, int TileSize)
 {
-	Size = WorldSize;
+	this->Size = WorldSize;
 	this->TileSize = TileSize;
 
-	AmountOfTiles = ((Size * 2) * (Size * 2) / (this->TileSize * this->TileSize));
-	Sparse.resize(AmountOfTiles);
-	std::fill(Sparse.begin(), Sparse.end(), INVALID_INDEX);
+	this->AmountOfTiles = ((this->Size * 2) * (this->Size * 2) / (this->TileSize * this->TileSize));
+	this->Sparse.resize(this->AmountOfTiles);
+	std::fill(this->Sparse.begin(), this->Sparse.end(), INVALID_INDEX);
 }
 
 void Grid::ToggleLineDisplay()
 {
-	DisplayLines = !DisplayLines;
+	this->DisplayLines = !this->DisplayLines;
 }
 
 void Grid::AddTileToCurrentStroke(size_t SparseIndex, int AtlasHeight, Vector2 GridPosition, Vector2 AtlasPosition)
@@ -23,24 +23,24 @@ void Grid::AddTileToCurrentStroke(size_t SparseIndex, int AtlasHeight, Vector2 G
 	LastAction.AtlasPosition = AtlasPosition;
 	LastAction.AtlasHeight = AtlasHeight;
 	LastAction.TileAddtion = true;
-	StrokeActions.push_back(LastAction);
+	this->StrokeActions.push_back(LastAction);
 }
 
 void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPosition, int AtlasHeight, bool PlayerAction)
 {
-	if (SparseIndex >= AmountOfTiles)
+	if (SparseIndex >= this->AmountOfTiles)
 	{
 		return;
 	}
-	size_t TileIndex = Sparse[SparseIndex];
+	size_t TileIndex = this->Sparse[SparseIndex];
 	if (TileIndex == INVALID_INDEX)
 	{
-		Sparse[SparseIndex] = Tiles.size();
-		Tiles.push_back(Tile(GridPosition, AtlasPosition, AtlasHeight));
+		this->Sparse[SparseIndex] = this->Tiles.size();
+		this->Tiles.push_back(Tile(GridPosition, AtlasPosition, AtlasHeight));
 	}
 	else
 	{
-		Tile& PreviousTile = Tiles[TileIndex];
+		Tile& PreviousTile = this->Tiles[TileIndex];
 		if (!PreviousTile.IsSameAs(GridPosition, AtlasPosition))
 		{
 			PreviousTile.Set(GridPosition, AtlasPosition, AtlasHeight);
@@ -48,43 +48,43 @@ void Grid::AddTile(size_t SparseIndex, Vector2 GridPosition, Vector2 AtlasPositi
 	}
 	if (PlayerAction)
 	{
-		AddTileToCurrentStroke(SparseIndex, AtlasHeight, GridPosition, AtlasPosition);
+		this->AddTileToCurrentStroke(SparseIndex, AtlasHeight, GridPosition, AtlasPosition);
 	}
 
 }
 
 void Grid::RemoveTile(size_t SparseIndex, int AtlasHeight, bool PlayerAction)
 {
-	if (SparseIndex > AmountOfTiles || Sparse[SparseIndex] == INVALID_INDEX)
+	if (SparseIndex > this->AmountOfTiles || this->Sparse[SparseIndex] == INVALID_INDEX)
 	{
 		return;
 	}
-	size_t TileIndex = Sparse[SparseIndex];
-	size_t LastTileIndex = Tiles.size() - 1;
+	size_t TileIndex = this->Sparse[SparseIndex];
+	size_t LastTileIndex = this->Tiles.size() - 1;
 	if (PlayerAction)
 	{
-		AddTileToCurrentStroke(SparseIndex, AtlasHeight, Tiles[TileIndex].GetGridPosition(), Tiles[TileIndex].GetAtlasPixelPosition());
+		this->AddTileToCurrentStroke(SparseIndex, AtlasHeight, this->Tiles[TileIndex].GetGridPosition(), this->Tiles[TileIndex].GetAtlasPixelPosition());
 	}
 	if (TileIndex == LastTileIndex)
 	{
-		Tiles.pop_back();
-		Sparse[SparseIndex] = INVALID_INDEX;
+		this->Tiles.pop_back();
+		this->Sparse[SparseIndex] = INVALID_INDEX;
 	}
 	else
 	{
-		Tile& LastTile = Tiles.back();
-		Tile& DeletedTile = Tiles[TileIndex];
+		Tile& LastTile = this->Tiles.back();
+		Tile& DeletedTile = this->Tiles[TileIndex];
 		LastTile.CutPasteTo(DeletedTile, AtlasHeight);
-		Tiles.pop_back();
-		size_t MovedTileIdx = GridToIndex(Tiles[TileIndex].GetGridPosition());
-		Sparse[MovedTileIdx] = TileIndex;
-		Sparse[SparseIndex] = INVALID_INDEX;
+		this->Tiles.pop_back();
+		size_t MovedTileIdx = GridToIndex(this->Tiles[TileIndex].GetGridPosition());
+		this->Sparse[MovedTileIdx] = TileIndex;
+		this->Sparse[SparseIndex] = INVALID_INDEX;
 	}
 }
 
 void Grid::Draw(const Texture& Atlas, Rectangle& DisplayedRegion)
 {
-	for (Tile& Case : Tiles)
+	for (Tile& Case : this->Tiles)
 	{
 		if (CheckCollisionRecs(DisplayedRegion, Case.GetTileRectangle()))
 		{
@@ -93,11 +93,11 @@ void Grid::Draw(const Texture& Atlas, Rectangle& DisplayedRegion)
 	}
 	if (DisplayLines)
 	{
-		DrawLines();
+		this->DrawLines();
 	}
 }
 
-void Grid::DrawLines()
+void Grid::DrawLines() const
 {
 	for (int Column = -Size; Column <= Size; Column += TileSize)
 	{
@@ -112,56 +112,56 @@ void Grid::DrawLines()
 void Grid::RegisterStroke()
 {
 
-	PastStrokes.push_back(StrokeActions);
-	StrokeActions.clear();
-	StrokeActions.shrink_to_fit();
+	this->PastStrokes.push_back(StrokeActions);
+	this->StrokeActions.clear();
+	this->StrokeActions.shrink_to_fit();
 }
 
 void Grid::ReverseLastStroke()
 {
-	if (PastStrokes.size() == 0)
+	if (this->PastStrokes.size() == 0)
 	{
 		return;
 	}
-	std::vector<ActionData> LastStroke = PastStrokes.back();
-	PastStrokes.pop_back();
+	std::vector<ActionData> LastStroke = this->PastStrokes.back();
+	this->PastStrokes.pop_back();
 	for (ActionData& Action : LastStroke)
 	{
 		if (Action.TileAddtion)
 		{
-			RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
+			this->RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
 		}
 		else
 		{
-			AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
+			this->AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
 		}
 	}
-	ReversedStrokes.push_back(LastStroke);
+	this->ReversedStrokes.push_back(LastStroke);
 }
 
 void Grid::RedoLastStroke()
 {
-	if (ReversedStrokes.size() == 0)
+	if (this->ReversedStrokes.size() == 0)
 	{
 		return;
 	}
-	std::vector<ActionData> LastStroke = ReversedStrokes.back();
-	ReversedStrokes.pop_back();
+	std::vector<ActionData> LastStroke = this->ReversedStrokes.back();
+	this->ReversedStrokes.pop_back();
 	for (ActionData& Action : LastStroke)
 	{
 		if (Action.TileAddtion)
 		{
-			AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
+			this->AddTile(Action.SparseIndex, Action.GridPosition, Action.AtlasPosition, Action.AtlasHeight, false);
 		}
 		else
 		{
-			RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
+			this->RemoveTile(Action.SparseIndex, Action.AtlasHeight, false);
 		}
 	}
-	PastStrokes.push_back(LastStroke);
+	this->PastStrokes.push_back(LastStroke);
 }
 
-void Grid::Save(int AtlasHeight)
+void Grid::Save(int AtlasHeight) const
 {
 	std::string PosXField = "PosX";
 	std::string PosYField = "PosY";
@@ -171,11 +171,11 @@ void Grid::Save(int AtlasHeight)
 
 	std::string Content = "{\n";
 
-	for (int i = 0; i < Tiles.size(); i++)
+	for (int i = 0; i < this->Tiles.size(); i++)
 	{
-		Vector2 TileGridPosition = Tiles[i].GetGridPosition();
+		Vector2 TileGridPosition = this->Tiles[i].GetGridPosition();
 		Vector2 WorldPosition = Vector2AddValue(GridToWorld(TileGridPosition), SAVING_OFFSET);
-		Vector2 AtlasPosition = Tiles[i].GetAtlasPixelPosition();
+		Vector2 AtlasPosition = this->Tiles[i].GetAtlasPixelPosition();
 		Vector2 ImageSpacePosition = SwitchTextureSpace(AtlasPosition, AtlasHeight);
 		Vector2 Dimensions = Vector2((float)TILE_SIZE, (float)TILE_SIZE);
 		std::string TileId = std::to_string(GridToIndex(TileGridPosition));
@@ -186,7 +186,7 @@ void Grid::Save(int AtlasHeight)
 		Content += Indentation + Indentation + '"' + PosYField + '"' + " : " + std::to_string((int)WorldPosition.y) + ",\n";
 		Content += Indentation + Indentation + '"' + AtlasPosXField + '"' + " : " + std::to_string((int)ImageSpacePosition.x) + ",\n";
 		Content += Indentation + Indentation + '"' + AtlasPosYField + '"' + " : " + std::to_string((int)ImageSpacePosition.y) + "\n";
-		if (i == Tiles.size() - 1)
+		if (i == this->Tiles.size() - 1)
 		{
 			Content += Indentation + "}\n";
 		}
@@ -204,9 +204,9 @@ void Grid::Save(int AtlasHeight)
 
 int Grid::OpenTileMap(const std::string& FileName, int AtlasHeight)
 {
-	std::fill(Sparse.begin(), Sparse.end(), INVALID_INDEX);
-	Tiles.clear();
-	Tiles.shrink_to_fit();
+	std::fill(this->Sparse.begin(), this->Sparse.end(), INVALID_INDEX);
+	this->Tiles.clear();
+	this->Tiles.shrink_to_fit();
 
 	const std::string FilePath = "Tilemaps/" + FileName;
 	std::fstream Data(FilePath);
@@ -236,7 +236,7 @@ int Grid::OpenTileMap(const std::string& FileName, int AtlasHeight)
 		Vector2 GridPosition = WorldToGrid(Vector2((float)WorldPosX, (float)WorldPosY));
 		size_t SparseIndex = GridToIndex(GridPosition);
 		
-		AddTile(SparseIndex, GridPosition, AtlasPosition, AtlasHeight);
+		this->AddTile(SparseIndex, GridPosition, AtlasPosition, AtlasHeight);
 	}
 	return 0;
 }

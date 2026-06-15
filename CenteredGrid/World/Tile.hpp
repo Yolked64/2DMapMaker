@@ -11,14 +11,14 @@ class Tile
 		void Set(Vector2 GridPosition, Vector2 AtlasPixelPosition, int AtlasHeight);
 		void Reset();
 
-		void Draw(const Texture& Atlas);
+		void Draw(const Texture& Atlas) const;
 
 		void CutPasteTo(Tile& Case, int AtlasHeight);
-		bool IsSameAs(Vector2 TileGridPosition, Vector2 PixelAtlasPosition);
+		bool IsSameAs(Vector2 TileGridPosition, Vector2 PixelAtlasPosition) const;
 
-		Vector2 GetGridPosition();
-		Vector2 GetAtlasPixelPosition();
-		Rectangle GetTileRectangle();
+		Vector2 GetGridPosition() const;
+		Vector2 GetAtlasPixelPosition() const;
+		Rectangle GetTileRectangle() const;
 	private:
 		Vector2 GridPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);
 		Vector2 WorldPosition = Vector2((float)INVALID_INDEX, (float)INVALID_INDEX);

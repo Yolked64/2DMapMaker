@@ -32,7 +32,7 @@ class Grid
 		void RedoLastStroke();
 		void RegisterStroke();
 
-		void Save(int AtlasHeight);
+		void Save(int AtlasHeight) const;
 		int OpenTileMap(const std::string& FileName, int AtlasHeight);
 	private:
 		int Size;
@@ -47,6 +47,6 @@ class Grid
 		std::vector<std::vector<ActionData>> ReversedStrokes;
 		std::vector<ActionData> StrokeActions;
 
-		void DrawLines();
+		void DrawLines() const;
 		void AddTileToCurrentStroke(size_t SparseIndex, int AtlasHeight, Vector2 GridPosition = Vector2Zero(), Vector2 AtlasPosition = Vector2Zero());
 };

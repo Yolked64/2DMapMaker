@@ -14,5 +14,5 @@ class Button : public UiItem
 		Color TextColor = BLACK;
 		int TextSize = 16;
 
-		void DrawContent() const;
+		void DrawContent() const override;
 };
